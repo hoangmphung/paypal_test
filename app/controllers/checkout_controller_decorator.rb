@@ -83,7 +83,6 @@ CheckoutController.class_eval do
         else
           order_ship_address.state_name = ship_address["state"]
         end
-        puts order_ship_address.inspect
         order_ship_address.save!
 
         @order.ship_address = order_ship_address
@@ -119,7 +118,7 @@ CheckoutController.class_eval do
     else
       ppx_auth_response = gateway.authorize((@order.total*100).to_i, opts)
     end
-
+    puts ppx_auth_response.inspect
     paypal_account = PaypalAccount.find_by_payer_id(params[:PayerID])
 
     payment = @order.payments.create(
@@ -129,9 +128,9 @@ CheckoutController.class_eval do
       :payment_method_id => params[:payment_method_id],
       :response_code => ppx_auth_response.params["ack"],
       :avs_response => ppx_auth_response.avs_result["code"])
-
+    puts payment.inspect
     payment.started_processing!
-
+    puts 'Testing3'
     record_log payment, ppx_auth_response
 
     if ppx_auth_response.success?
