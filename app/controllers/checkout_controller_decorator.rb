@@ -78,13 +78,13 @@ CheckoutController.class_eval do
                                          :zipcode    => ship_address["zip"],
                                          # phone is currently blanked in AM's PPX response lib
                                          :phone      => @ppx_details.params["phone"] || "(not given)"
-
+puts 'Testing 2'
         if (state = State.find_by_abbr(ship_address["state"]))
           order_ship_address.state = state
         else
           order_ship_address.state_name = ship_address["state"]
         end
-
+        puts 'Testing 1'
         order_ship_address.save!
 
         @order.ship_address = order_ship_address
