@@ -109,10 +109,10 @@ CheckoutController.class_eval do
 
   def paypal_finish
     load_order
-
+puts @order
     opts = { :token => params[:token], :payer_id => params[:PayerID] }.merge all_opts(@order, params[:payment_method_id], 'payment' )
     gateway = paypal_gateway
-
+puts gateway
     if Spree::Config[:auto_capture]
       ppx_auth_response = gateway.purchase((@order.total*100).to_i, opts)
     else
