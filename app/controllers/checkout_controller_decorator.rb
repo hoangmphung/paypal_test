@@ -109,7 +109,7 @@ CheckoutController.class_eval do
 
   def paypal_finish
     load_order
-puts 'Order ' + @order
+puts 'Order ' + @order.inspect
     opts = { :token => params[:token], :payer_id => params[:PayerID] }.merge all_opts(@order, params[:payment_method_id], 'payment' )
     gateway = paypal_gateway
 puts 'payerId ' + params[:PayerID]
